@@ -1,0 +1,173 @@
+
+**********************************************************************
+*
+*	ECSE434 Microlectronics Laboratory 
+*               Prof. Anas Hamoui      
+*                  (Fall 2008)
+*
+*
+*  This file contains the SPICE models for all components used 
+*  in the ECSE334 Lab Projects.
+*
+*  If you are writing a NETLIST to describe your circuit schematic 
+*  for PSpice simulations, you must include this SPICE-model file
+*  in your netlist.
+*
+*  If you are using CAPTURE to enter your circuit schematic
+*  for PSpice simulations, you must include a path to this SPICE-model
+*  library file in your PSPICE simulation profile in CAPTURE.
+*  For more informatio, please refer to the document 
+*  "Getting Started with Schematic Capture and PSpice" in
+*  [A. Hamoui, Microelectroincs Lab Manual: CAD Tools & IC Technology, 2008] 
+*
+*
+**********************************************************************
+
+
+
+
+
+**********************************************************************
+*** BJTs
+**********************************************************************
+
+*** MPS2222a BJT 
+.MODEL Q2222a npn (
++IS=3.17132e-13 BF=1256.22 NF=1.02244 VAF=84.3948
++IKF=0.327148 ISE=7.42524e-12 NE=1.73924 BR=38.0369
++NR=1.01607 VAR=0.995915 IKR=0.0630953 ISC=1.00431e-16
++NC=4 RB=1.96428 IRB=4.19636 RBM=0.0103279
++RE=1e-05 RC=0.180572 XTB=3.42142 XTI=0.0102863
++EG=1.206 CJE=2.53476e-11 VJE=0.415008 MJE=0.301384
++TF=3.86575e-10 XTF=1.81864 VTF=36.1583 ITF=0.322863
++CJC=1.24128e-11 VJC=0.142948 MJC=0.266348 XCJC=0.899999
++FC=0.53103 CJS=0 VJS=0.75 MJS=0.5
++TR=2.55854e-10 PTF=0 KF=0 AF=1)
+
+
+*** NOMINAL model for GA911 Small NPN
+.MODEL QSNPN_911 NPN (IS=5E-17 BF=147 VAF=80 IKF=4.3E-3 ISE=8E-18 NE=1.233
++BR=1.9 VAR=11 IKR=6E-4 ISC=5E-16 NC=1.08 RE=12 RB=1200 RBM=200 RC=25
++CJE=58E-15 VJE=0.83 MJE=0.35 CJC=133E-15 VJC=0.6 MJC=0.44 XCJC=1
++CJS=830E-15 VJS=0.6 MJS=0.4 ISS=1E-16 FC=0.85 TF=60P XTF=48 ITF=3E-2
++TR=10N EG=1.16 XTI=3 XTB=1.6)
+
+.MODEL SNPN_911 NPN (IS=5E-17 BF=147 VAF=80 IKF=4.3E-3 ISE=8E-18 NE=1.233
++BR=1.9 VAR=11 IKR=6E-4 ISC=5E-16 NC=1.08 RE=12 RB=1200 RBM=200 RC=25
++CJE=58E-15 VJE=0.83 MJE=0.35 CJC=133E-15 VJC=0.6 MJC=0.44 XCJC=1
++CJS=830E-15 VJS=0.6 MJS=0.4 ISS=1E-16 FC=0.85 TF=60P XTF=48 ITF=3E-2
++TR=10N EG=1.16 XTI=3 XTB=1.6)
+
+
+
+*** NOMINAL model for GA911 Large NPN
+.MODEL QLNPN_911 NPN (IS=7.5E-16 BF=206 VAF=58 IKF=20E-3 ISE=8E-18 NE=1.105
++BR=4.5 VAR=11 IKR=2E-3 NC=2 RE=0.7 RB=660 RBM=35 RC=9 CJE=550E-15 VJE=0.83
++MJE=0.35 CJC=440E-15 VJC=0.6 MJC=0.44 XCJC=1 CJS=1.65E-12 VJS=0.6 MJS=0.4
++ISS=2E-16 FC=0.85 TF=70P XTF=20 ITF=0.2 TR=2N EG=1.16 XTI=3 XTB=1.6)
+
+.MODEL LNPN_911 NPN (IS=7.5E-16 BF=206 VAF=58 IKF=20E-3 ISE=8E-18 NE=1.105
++BR=4.5 VAR=11 IKR=2E-3 NC=2 RE=0.7 RB=660 RBM=35 RC=9 CJE=550E-15 VJE=0.83
++MJE=0.35 CJC=440E-15 VJC=0.6 MJC=0.44 XCJC=1 CJS=1.65E-12 VJS=0.6 MJS=0.4
++ISS=2E-16 FC=0.85 TF=70P XTF=20 ITF=0.2 TR=2N EG=1.16 XTI=3 XTB=1.6)
+
+
+
+*** NOMINAL model for GA911 Small PNP
+.MODEL QSPNP_911 LPNP (IS=2.9E-16 XTI=3.3 EG=1.16 VAF=60 BF=49 NE=1.585
++ISE=4E-15 IKF=140E-6 XTB=1.5 BR=0.5108 VAR=6 NC=1.58 ISC=40E-15 IKR=140E-6
++RC=50 RE=20 RB=150 RBM=30 CJC=245E-15 MJC=0.44 VJC=0.6 FC=0.85 CJE=54E-15
++MJE=0.44 VJE=0.6 TF=14E-9 ITF=3E-3 VTF=4 XTF=0.8 TR=338E-9
++ISS=1E-16 CJS=830E-15 VJS=0.6 MJS=0.4)
+
+.MODEL SPNP_911 LPNP (IS=2.9E-16 XTI=3.3 EG=1.16 VAF=60 BF=49 NE=1.585
++ISE=4E-15 IKF=140E-6 XTB=1.5 BR=0.5108 VAR=6 NC=1.58 ISC=40E-15 IKR=140E-6
++RC=50 RE=20 RB=150 RBM=30 CJC=245E-15 MJC=0.44 VJC=0.6 FC=0.85 CJE=54E-15
++MJE=0.44 VJE=0.6 TF=14E-9 ITF=3E-3 VTF=4 XTF=0.8 TR=338E-9
++ISS=1E-16 CJS=830E-15 VJS=0.6 MJS=0.4)
+
+
+
+
+
+**********************************************************************
+*** Diodes
+**********************************************************************
+
+*** 1N34a silicon-germanium diode
+.MODEL 1N34A D ( bv=75 cjo=0.5e-12 eg=0.67 ibv=18e-3 is=2e-7 rs=7 n=1.3 vj=0.1 m=0.27 )
+
+
+
+
+**********************************************************************
+*** Operational amplifiers
+**********************************************************************
+* The parameters in the opamp library were derived from the data sheets for
+* each part. The macromodel used is similar to the one described in:
+*
+* Macromodeling of Integrated Circuit Operational Amplifiers
+* by Graeme Boyle, Barry Cohn, Donald Pederson, and James Solomon
+* IEEE Journal of SoliE-State Circuits, Vol. SC-9, no. 6, Dec. 1974
+*
+* Differences from the reference (above) occur in the output limiting stage
+* which was modified to reduce internally generated currents associated with
+* output voltage limiting, as well as short-circuit current limiting.
+*
+* The opamps are modelled at room temperature and do not track changes with
+* temperature. This library file contains models for nominal, not worst case,
+* devices.
+*
+*-----------------------------------------------------------------------------
+
+* TL084 Op-Amp model
+
+*connections: non-inverting input
+*             | inverting input
+*             | | positive power supply
+*             | | | negative power supply
+*             | | | | output
+*             | | | | |
+.subckt TL084 1 2 3 4 5
+*
+c1 11 12 2.412E-12
+c2 6 7 18.00E-12
+css 10 99 5.400E-12
+dc 5 53 dx
+de 54 5 dx
+dlp 90 91 dx
+dln 92 90 dx
+dp 4 3 dx
+egnd 99 0 poly(2),(3,0),(4,0) 0 .5 .5
+fb 7 99 poly(5) vb vc ve vlp vln 0 3.467E6 -3E6 3E6 3E6 -3E6
+ga 6 0 11 12 339.3E-6
+gcm 0 6 10 99 17.01E-9
+iss 10 4 dc 234.0E-6
+hlim 90 0 vlim 1K
+j1 11 2 10 jx
+j2 12 1 10 jx
+r2 6 9 100.0E3
+rd1 3 11 2.947E3
+rd2 3 12 2.947E3
+ro1 8 5 50
+ro2 7 99 170
+rp 3 4 20.00E3
+rss 10 99 854.7E3
+vb 9 0 dc 0
+vc 3 53 dc 1.500
+ve 54 4 dc 1.500
+vlim 7 8 dc 0
+vlp 91 0 dc 50
+vln 0 92 dc 50
+.model dx D(Is=800.0E-18 Rs=1)
+.model jx NJF(Is=2.500E-12 Beta=984.2E-6 Vto=-1)
+.ends
+
+
+
+**********************************************************************
+*** Resistors
+**********************************************************************
+*** Model for GA911 Nominal Resistors with Temperature Coefficient TC = 0
+.MODEL RP- RES (R=1.0 TC1=0 TC2=0)
+.MODEL RP+ RES (R=1.0 TC1=0)

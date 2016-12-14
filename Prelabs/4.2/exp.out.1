@@ -1,0 +1,58 @@
+
+**** 10/28/15 00:01:37 ******* PSpice Lite (April 2011) ******* ID# 10813 ****
+
+ PreAmplifier Circuit
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+*Voltage Sources
+Vin 0 1 SIN (0 0.2 10K 0 0 0)
+VCC 3 0 5V
+
+*Elements*
+*Capacitors 
+C2 1 2 1u
+C3 3 0 1u
+CB 4 0 1u
+
+*Resisors
+R5 2 0 1.7K
+R4 2 3 3.3K
+R6 3 4 3K
+R7 4 0 2K
+RE 6 0 10
+R9 10 0 100
+
+*Transisors
+QT1 5 2 6 MPS3704
+QT2 8 4 5 MPS3704
+QT3 3 8 9 MPS3704
+QT4 3 9 10 MPS3704
+
+.model MPS3704  NPN(Is=26.03f Xti=3 Eg=1.11 Vaf=90.7 Bf=736.1K Ne=1.232
++               Ise=26.03f Ikf=.1983 Xtb=1.5 Br=1.024 Nc=2 Isc=0 Ikr=0 Rc=.5
++               Cjc=11.01p Mjc=.3763 Vjc=.75 Fc=.5 Cje=24.07p Mje=.3641 Vje=.75
++               Tr=233.8n Tf=1.03n Itf=0 Vtf=0 Xtf=0 Rb=10)
+*               Motorola        pid=2N4400      case=TO92
+*               88-09-13 bam    creation
+
+*TANK
+RL 3 7 10
+LT 7 8 100u
+CT 3 8 1nF
+
+*Analysis Request
+.probe
+.TRAN 0.1m 2m
+
+.END
+
+ERROR(ORPSIM-15141): Less than 2 connections at node 9.
+

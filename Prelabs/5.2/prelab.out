@@ -1,0 +1,417 @@
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+**Circuit Description
+*Voltage Supply
+Vin1 30 0  SIN (0 0.5m 10K)
+Vin2 31 0  SIN (0 1 464K)
+*Vin 0 30 AC 1m 0
+*Vin2 0 31 AC 1m 0
+
+E1_mult 0 2 value {V(30)*V(31)}
+
+XPreamp 2 3 Preamp
+XDemod 3 4 Demod
+XBBAmp 4 5 BBAmp
+XCAOS 5 6 CAOS
+
+*Analysis Request
+.PROBE
+.TRAN 0 5m
+*.AC DEC 10 0.01Hz 10MegHz
+
+*********************** Preamplifier ***************************
+.SUBCKT Preamp 1 10
+        *Voltage Sources
+        *Vin 0 1 AC 1m 0
+
+        VCC 3 0 5V
+
+        *Elements*
+        *Capacitors 
+        C2 1 2 1u
+        C3 3 0 1u
+        CB 4 0 1u
+
+        *Resisors
+        R5 2 0 22k
+        R4 2 3 28k
+        R6 3 4 25k
+        R7 4 0 70k
+        RE 6 0 40
+        R9 10 0 100
+
+        *Transisors
+        QT1 5 2 6 MPS3704
+        QT2 8 4 5 MPS3704
+        QT3 3 8 9 MPS3704
+        QT4 3 9 10 MPS3704
+
+        .model MPS3704  NPN(Is=26.03f Xti=3 Eg=1.11 Vaf=90.7 Bf=736.1K Ne=1.232
+        +               Ise=26.03f Ikf=.1983 Xtb=1.5 Br=1.024 Nc=2 Isc=0 Ikr=0 Rc=.5
+        +               Cjc=11.01p Mjc=.3763 Vjc=.75 Fc=.5 Cje=24.07p Mje=.3641 Vje=.75
+        +               Tr=233.8n Tf=1.03n Itf=0 Vtf=0 Xtf=0 Rb=10)
+        *               Motorola        pid=2N4400      case=TO92
+        *               88-09-13 bam    creation
+
+        *TANK
+        RL 3 7 10
+        LT 7 8 100uH
+        CT 3 8 1nF
+
+        *Analysis Request
+        *.probe
+        *.TRAN 0.1m 0.5m
+        *.AC DEC 3 0.1Hz 1000MEGHz
+.ENDS Preamp
+******************************************************************
+
+************************* Demodulator ****************************
+.SUBCKT Demod 2 3
+*
+        *Circuit Analysis
+        *Vin1 0 1 SIN (0 10 10K 0 0 0)
+        *Vin2 1 2 SIN (0 25 0.25Meg 0 0 0)
+
+        D 2 3 1N34A
+
+        .MODEL 1N34A D ( bv=75 cjo=0.5e-12 eg=0.67 ibv=18e-3 is=2e-7 rs=7 n=1.3 vj=0.1 m=0.27 )
+        Rdem 3 0 200k
+        Cdem 3 0 0.934n
+
+        *analysis request
+        *.PROBE
+        *.TRAN 0 1m
+.ENDS Demod
+******************************************************************
+
+************************ BaseBand Amp ****************************
+.SUBCKT BBAmp 1 4
+
+        *Circuit description*
+
+        *Power sources*
+        *Vin 0 1 AC 1m 0
+        Vcc 5 0 DC 5
+        Vee 6 0 DC -5
+
+        *Elements*
+        C1 1 2 1uF
+        R1 2 0 150K
+        Rpot 0 3 10K
+        R2 3 4 50K
+        X1 2 3 5 6 4 TL084
+
+        **ANALYSIS REQUUEST**
+        *.AC DEC 10 0.01Hz 10MegHz
+
+        **OUTPUT REQUEST**
+
+        *.PROBE 
+.ENDS BBAmp
+*-----------------------------------------------------------------------------
+        **TL084**
+        * connections:   non-inverting input
+        *                | inverting input
+        *                | | positive power supply
+        *                | | | negative power supply
+        *                | | | | output
+        *                | | | | |
+        .subckt TL084    1 2 3 4 5
+                *
+                X_tl084 1 2 3 4 5 TL082
+        .ends
+
+        **TL082**
+*-----------------------------------------------------------------------------
+        * connections:non-inverting input
+        *             | inverting input
+        *             | | positive power supply
+        *             | | | negative power supply
+        *             | | | | output
+        *             | | | | |
+        .subckt TL082 1 2 3 4 5
+                *
+                c1   11 12 2.412E-12
+                c2    6  7 18.00E-12
+                css  10 99 5.400E-12
+                dc    5 53 dy
+                de   54  5 dy
+                dlp  90 91 dx
+                dln  92 90 dx
+                dp    4  3 dx
+                egnd 99  0 poly(2),(3,0),(4,0) 0 .5 .5
+                fb    7 99 poly(5) vb vc ve vlp vln 0 3.467E6 -1E3 1E3 3E6 -3E6
+                ga    6  0 11 12 339.3E-6
+                gcm   0  6 10 99 17.01E-9
+                iss  10  4 dc 234.0E-6
+                hlim 90  0 vlim 1K
+                j1   11  2 10 jx
+                j2   12  1 10 jx
+                r2    6  9 100.0E3
+                rd1   3 11 2.947E3
+                rd2   3 12 2.947E3
+                ro1   8  5 50
+                ro2   7 99 170
+                rp    3  4 20.00E3
+                rss  10 99 854.7E3
+                vb    9  0 dc 0
+                vc    3 53 dc 1.500
+                ve   54  4 dc 1.500
+                vlim  7  8 dc 0
+                vlp  91  0 dc 50
+                vln   0 92 dc 50
+                .model dx D(Is=800.0E-18 Rs=1)
+                .model dy D(Is=800.00E-18 Rs=1m Cjo=10p)
+                .model jx NJF(Is=2.500E-12 Beta=984.2E-6 Vto=-1)
+        .ends
+******************************************************************
+
+******************** Class A Output Stage ************************
+.SUBCKT CAOS 1 8
+        *Class A Output Stage*
+
+        *Sources
+        *Vin 0 1 SIN (0 0.2 10K 0 0 0)
+        VCC1 4 0 5
+        VCC2 5 0 5
+        VEE 3 0 -5
+
+        *Elements
+        *Capacitors
+        C4 1 2 22u
+        CL 3 0 22u
+        CP 4 0 22u
+        C5 7 8 22u
+
+        *Resistors
+        R10 2 4 4.3K
+        R11 2 3 5.7K
+        R12 6 5 48
+        RL 8 0 8
+        RE1 3 9 47
+        RE2 3 10 47 
+
+        *Transisors 
+        QT5 6 6 9 MPS3704
+        QT6 7 6 10 MPS3704
+        QT7 4 2 7 MPS3704
+
+        .model MPS3704  NPN(Is=26.03f Xti=3 Eg=1.11 Vaf=90.7 Bf=736.1K Ne=1.232
+        +               Ise=26.03f Ikf=.1983 Xtb=1.5 Br=1.024 Nc=2 Isc=0 Ikr=0 Rc=.5
+        +               Cjc=11.01p Mjc=.3763 Vjc=.75 Fc=.5 Cje=24.07p Mje=.3641 Vje=.75
+        +               Tr=233.8n Tf=1.03n Itf=0 Vtf=0 Xtf=0 Rb=10)
+        *               Motorola        pid=2N4400      case=TO92
+        *               88-09-13 bam    creation
+
+        *Analysis Request
+        *.probe
+        *.TRAN 0.1m 2m
+
+.ENDS CAOS
+
+******************************************************************
+
+
+.END
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     Diode MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               XDemod.1N34A    XBBAmp.X1.X_tl084.dx 
+          IS  200.000000E-09  800.000000E-18 
+           N    1.3                          
+          BV   75                            
+         IBV     .018                        
+          RS    7               1            
+         CJO  500.000000E-15                 
+          VJ     .1                          
+           M     .27                         
+          EG     .67                         
+
+
+               XBBAmp.X1.X_tl084.dy 
+          IS  800.000000E-18 
+          RS    1.000000E-03 
+         CJO   10.000000E-12 
+
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               XPreamp.MPS3704 XCAOS.MPS3704   
+               NPN             NPN             
+       LEVEL    1               1            
+          IS   26.030000E-15   26.030000E-15 
+          BF  736.100000E+03  736.100000E+03 
+          NF    1               1            
+         VAF   90.7            90.7          
+         IKF     .1983           .1983       
+         ISE   26.030000E-15   26.030000E-15 
+          NE    1.232           1.232        
+          BR    1.024           1.024        
+          NR    1               1            
+         ISS    0               0            
+          RB   10              10            
+          RE    0               0            
+          RC     .5              .5          
+         CJE   24.070000E-12   24.070000E-12 
+         VJE     .75             .75         
+         MJE     .3641           .3641       
+         CJC   11.010000E-12   11.010000E-12 
+         VJC     .75             .75         
+         MJC     .3763           .3763       
+        XCJC    1               1            
+         CJS    0               0            
+         VJS     .75             .75         
+          TF    1.030000E-09    1.030000E-09 
+          TR  233.800000E-09  233.800000E-09 
+         XTB    1.5             1.5          
+          KF    0               0            
+          AF    1               1            
+          CN    2.42            2.42         
+           D     .87             .87         
+
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     Junction FET MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               XBBAmp.X1.X_tl084.jx 
+               NJF             
+         VTO   -1            
+        BETA  984.200000E-06 
+          IS    2.500000E-12 
+
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(    2)    0.0000  (    3)    3.5594  (    4)    3.4094  (    5)-89.53E-06      
+
+(    6)    0.0000  (   30)    0.0000  (   31)    0.0000  (XCAOS.2)    -.1947    
+
+(XCAOS.3)   -5.0000                   (XCAOS.4)    5.0000                       
+
+(XCAOS.5)    5.0000                   (XCAOS.6)    -.0927                       
+
+(XCAOS.7)    -.9428                   (XCAOS.9)    -.8534                       
+
+(XBBAmp.2) 1.546E-06                  (XBBAmp.3)-14.84E-06                      
+
+(XBBAmp.5)    5.0000                  (XBBAmp.6)   -5.0000                      
+
+(XCAOS.10)   -1.0302                  (XPreamp.2)    1.1937                     
+
+(XPreamp.3)    5.0000                 (XPreamp.4)    2.2200                     
+
+(XPreamp.5)    1.5233                 (XPreamp.6)     .4961                     
+
+(XPreamp.7)    4.8776                 (XPreamp.8)    4.8776                     
+
+(XPreamp.9)    4.2881                 (XBBAmp.X1.X_tl084.6) 14.86E-09           
+
+(XBBAmp.X1.X_tl084.7)-89.60E-06       (XBBAmp.X1.X_tl084.8)-89.60E-06           
+
+(XBBAmp.X1.X_tl084.9)    0.0000       (XBBAmp.X1.X_tl084.10)     .6546          
+
+(XBBAmp.X1.X_tl084.11)    4.6541      (XBBAmp.X1.X_tl084.12)    4.6541          
+
+(XBBAmp.X1.X_tl084.53)    3.5000      (XBBAmp.X1.X_tl084.54)   -3.5000          
+
+(XBBAmp.X1.X_tl084.90)-1.494E-06      (XBBAmp.X1.X_tl084.91)   50.0000          
+
+(XBBAmp.X1.X_tl084.92)  -50.0000      (XBBAmp.X1.X_tl084.99)    0.0000      
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    Vin1         0.000E+00
+    Vin2         0.000E+00
+    XPreamp.VCC  -4.810E-02
+    XBBAmp.Vcc  -7.348E-04
+    XBBAmp.Vee   7.340E-04
+    XCAOS.VCC1  -6.744E-02
+    XCAOS.VCC2  -1.061E-01
+    XCAOS.VEE    1.735E-01
+    XBBAmp.X1.X_tl084.vb   1.486E-13
+    XBBAmp.X1.X_tl084.vc   3.501E-12
+    XBBAmp.X1.X_tl084.ve   3.638E-12
+    XBBAmp.X1.X_tl084.vlim  -1.494E-09
+    XBBAmp.X1.X_tl084.vlp  -5.000E-11
+    XBBAmp.X1.X_tl084.vln  -5.001E-11
+
+    TOTAL POWER DISSIPATION   1.98E+00  WATTS
+
+
+
+          JOB CONCLUDED
+
+**** 11/11/15 00:00:32 ****** PSpice Lite (October 2012) ****** ID# 10813 ****
+
+ Exp 5.1
+
+
+ ****     JOB STATISTICS SUMMARY
+
+
+******************************************************************************
+
+
+
+  Total job time (using Solver 1)   =        7.23
+

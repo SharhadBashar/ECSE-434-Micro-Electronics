@@ -1,0 +1,7 @@
+*---------------------------------------------------------------------
+* NOMINAL model set for GA911 semicustom array.  V1.1 July 1990
+* Set 8 : NPR = NNN
+
+.MODEL RP- RES (R=1.0 TC1=1.12E-3 TC2=2.81E-6)
+
+.MODEL RP+ RES (R=1.0 TC1=1.06E-3)

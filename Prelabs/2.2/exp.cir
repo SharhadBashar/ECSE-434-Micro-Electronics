@@ -1,0 +1,18 @@
+Experiment 2.2
+
+*Circuit Analysis
+Vin1 30 0  SIN (0 5 20K)
+Vin2 31 0  SIN (0 5 .48Meg)
+
+E1_mult 0 2 value {V(30)*V(31)}
+
+D 2 3 1N34A
+
+.MODEL 1N34A D ( bv=75 cjo=0.5e-12 eg=0.67 ibv=18e-3 is=2e-7 rs=7 n=1.3 vj=0.1 m=0.27 )
+Rdem 3 0 10K
+Cdem 3 0 2.24n
+
+*analysis request
+.PROBE
+.TRAN 0 1m
+.END

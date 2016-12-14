@@ -1,0 +1,153 @@
+
+**** 10/14/15 16:36:11 ******* PSpice Lite (April 2011) ******* ID# 10813 ****
+
+ Prelab 3.1
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+*Class A Output Stage*
+
+*Sources
+Vin 0 1 SIN (0 0.2 10K 0 0 0)
+VCC1 4 0 5
+VCC2 5 0 5
+VEE 3 0 -5
+
+*Elements
+*Capacitors
+C4 1 2 22u
+CL 3 0 22u
+CP 4 0 22u
+C5 7 8 22u
+
+*Resistors
+R10 2 4 4.3K
+R11 2 3 5.7K
+R12 6 5 48
+RL 8 0 8
+RE1 3 9 47
+RE2 3 10 47 
+
+*Transisors 
+QT5 6 6 9 MPS3704
+QT6 7 6 10 MPS3704
+QT7 4 2 7 MPS3704
+
+.model MPS3704  NPN(Is=26.03f Xti=3 Eg=1.11 Vaf=90.7 Bf=736.1K Ne=1.232
++               Ise=26.03f Ikf=.1983 Xtb=1.5 Br=1.024 Nc=2 Isc=0 Ikr=0 Rc=.5
++               Cjc=11.01p Mjc=.3763 Vjc=.75 Fc=.5 Cje=24.07p Mje=.3641 Vje=.75
++               Tr=233.8n Tf=1.03n Itf=0 Vtf=0 Xtf=0 Rb=10)
+*               Motorola        pid=2N4400      case=TO92
+*               88-09-13 bam    creation
+
+*Analysis Request
+.probe
+.TRAN 0.1m 2m
+
+.END
+
+**** 10/14/15 16:36:11 ******* PSpice Lite (April 2011) ******* ID# 10813 ****
+
+ Prelab 3.1
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               MPS3704         
+               NPN             
+       LEVEL    1            
+          IS   26.030000E-15 
+          BF  736.100000E+03 
+          NF    1            
+         VAF   90.7          
+         IKF     .1983       
+         ISE   26.030000E-15 
+          NE    1.232        
+          BR    1.024        
+          NR    1            
+         ISS    0            
+          RB   10            
+          RE    0            
+          RC     .5          
+         CJE   24.070000E-12 
+         VJE     .75         
+         MJE     .3641       
+         CJC   11.010000E-12 
+         VJC     .75         
+         MJC     .3763       
+        XCJC    1            
+         CJS    0            
+         VJS     .75         
+          TF    1.030000E-09 
+          TR  233.800000E-09 
+         XTB    1.5          
+          KF    0            
+          AF    1            
+          CN    2.42         
+           D     .87         
+
+
+**** 10/14/15 16:36:11 ******* PSpice Lite (April 2011) ******* ID# 10813 ****
+
+ Prelab 3.1
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(    1)    0.0000  (    2)    -.1947  (    3)   -5.0000  (    4)    5.0000      
+
+(    5)    5.0000  (    6)    -.0927  (    7)    -.9428  (    8)    0.0000      
+
+(    9)    -.8534  (   10)   -1.0302  
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    Vin          0.000E+00
+    VCC1        -6.744E-02
+    VCC2        -1.061E-01
+    VEE          1.735E-01
+
+    TOTAL POWER DISSIPATION   1.74E+00  WATTS
+
+
+
+          JOB CONCLUDED
+
+**** 10/14/15 16:36:11 ******* PSpice Lite (April 2011) ******* ID# 10813 ****
+
+ Prelab 3.1
+
+
+ ****     JOB STATISTICS SUMMARY
+
+
+******************************************************************************
+
+
+
+  Total job time (using Solver 1)   =         .09
+
